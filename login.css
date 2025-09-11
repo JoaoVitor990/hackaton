@@ -1,0 +1,103 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 97vh;
+    width: 98vw;
+    background-color: #9a9a9a;
+}
+
+
+@font-face{
+    font-family: 'Inter-regular';
+    src: url("fonts/Inter/static/Inter_18pt-Regular.ttf");
+}
+
+.login{
+    width: 400px;
+    height: 500px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: color black;
+    border-radius: 10px;
+}
+
+#login{
+    margin-left: 50px;
+    position: relative;
+    top: 15px;
+    font-family: Inter-regular;
+    left: 50px;
+}
+
+#campo_gmail{
+    background-color: #dadada;
+    border: none;
+    position: relative;
+    font-family: Inter;
+    border-radius: 5px;
+    width: 290px;
+    height: 30px;
+    top: 40px;
+    
+}
+
+#campo_senha{
+    background-color: #dadada;
+    border: none;
+    font-family: Inter;
+    width: 290px;
+    height: 30px;
+    border-radius: 5px;
+    position: relative;
+    top: 30px;
+}
+
+
+.cod_professor{
+    font-family: Inter-regular;
+    position: relative;
+    top: 40px;
+}
+
+.senha{
+    position: relative;
+    top: 25px;
+}
+
+.senha{
+    font-family: Inter-regular;
+    font-size: 17px;
+}
+
+.logar{
+    top: 225px;
+    font-family: Inter-regular;
+    font-size: 17px;
+    background-color: #ad0f0a;
+    margin-top: 60px;
+    left: 50px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    width: 250px;
+    height: 45px;
+    margin-left: 20px;
+}
+
+#criar_cont{
+    font-family: Inter-regular;
+    text-decoration: none;
+    color: black;
+    top: 230px;
+    font-size: Inter;
+    margin-left: 28px;
+    margin-left: 12px;
+}
+
+.mensagem{
+    position: relative;
+    top: -90px;
+}
