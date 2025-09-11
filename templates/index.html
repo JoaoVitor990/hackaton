@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>Correção de Gabarito</title>
+</head>
+<body>
+
+<div class="container">
+    <img src="etec_itanhaem.png" alt="">
+    <h1>Correção de Gabarito</h1>
+    <a href="#"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
+</div>
+
+<div class="container2">
+<label>Nome do Aluno:</label>
+<input type="text" id="nome" placeholder="Digite o nome"><br><br>
+
+<label>RM:</label>
+<input type="number" id="rm" placeholder="Digite o RM"><br><br>
+
+<label>Gabarito oficial:</label>
+<input type="file" id="gabarito"><br><br>
+
+<label>Resposta do aluno:</label>
+<input type="file" id="aluno"><br><br>
+
+<input type="number" id="numQuestoes" value="5" style="display: none;">
+<input type="number" id="numAlternativas" value="5" style="display: none;">
+
+<button onclick="enviar()">Corrigir</button>
+
+<h2>Resultado:</h2>
+<div id="resultado"></div>
+
+<h2>PDF da Correção:</h2>
+<div id="pdfContainer" style="height: 250px;"></div>
+</div>
+
+<script>
+function enviar() {
+    const gabarito = document.getElementById('gabarito').files[0];
+    const aluno = document.getElementById('aluno').files[0];
+    const nome = document.getElementById('nome').value;
+    const rm = document.getElementById('rm').value;
+    const numQuestoes = document.getElementById('numQuestoes').value;
+    const numAlternativas = document.getElementById('numAlternativas').value;
+
+    if (!gabarito || !aluno) { alert("Escolha ambas as imagens"); return; }
+    if (!nome || !rm) { alert("Digite nome e RM"); return; }
+
+    const formData = new FormData();
+    formData.append('gabarito', gabarito);
+    formData.append('aluno', aluno);
+    formData.append('nome', nome);
+    formData.append('rm', rm);
+    formData.append('num_questoes', numQuestoes);
+    formData.append('num_alternativas', numAlternativas);
+
+    fetch('http://127.0.0.1:5000/corrigir', { method: 'POST', body: formData })
+    .then(res => res.json())
+    .then(data => {
+        if(data.error){ alert("Erro: " + data.detalhes); return; }
+
+        document.getElementById('resultado').innerHTML = `
+            <p>Respostas gabarito: ${data.respostas_gabarito.join(', ')}</p>
+            <p>Respostas aluno: ${data.respostas_aluno.join(', ')}</p>
+            <p>Nota: ${data.nota.toFixed(2)} (${data.acertos}/${data.total} acertos)</p>
+            <p>Erros: ${data.erros.join(' | ')}</p>
+        `;
+
+        document.getElementById('pdfContainer').innerHTML = `<iframe src="${data.pdf_url}" width="100%" height="600px"></iframe>`;
+    })
+    .catch(err => console.error(err));
+}
+</script>
+</body>
+</html>
