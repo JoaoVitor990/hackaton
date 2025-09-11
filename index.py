@@ -198,7 +198,7 @@ def corrigir():
 # ------------------------------
 # Endpoint para ver resultados
 # ------------------------------
-@app.route('/resultadoss')
+@app.route('/resultados')
 def resultados():
     try:
         conn = mysql.connector.connect(**db_config)
@@ -214,9 +214,21 @@ def resultados():
 # ------------------------------
 # Rota principal
 # ------------------------------
+@app.route('/inicio')
+def inicio():
+    return render_template('inicio.html')
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/local_prova')
+def local_prova():
+    return render_template('local_prova.html')
+
+@app.route('/gabarito')
+def gabarito():
+    return render_template('gabarito.html')
 
 # ------------------------------
 # Rodar servidor

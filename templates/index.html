@@ -8,35 +8,42 @@
 </head>
 <body>
 
-<div class="container">
-    <img src="etec_itanhaem.png" alt="">
-    <h1>Correção de Gabarito</h1>
-    <a href="#"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
-</div>
+<header>
+  <div class="logo">
+    <img src="{{ url_for('static', filename='etec_itanhaem.png') }}" alt="Logo" width="150px">
+  </div>
+  <nav>
+    <a href="{{ url_for('inicio') }}">Home</a>
+  </nav>
+  <div class="user">👤</div>
+</header>
+
 
 <div class="container2">
-<label>Nome do Aluno:</label>
-<input type="text" id="nome" placeholder="Digite o nome"><br><br>
+    <label>Nome do Aluno:</label>
+    <input type="text" id="nome" placeholder="Digite o nome"><br><br>
 
-<label>RM:</label>
-<input type="number" id="rm" placeholder="Digite o RM"><br><br>
+    <label>RM:</label>
+    <input type="number" id="rm" placeholder="Digite o RM"><br><br>
 
-<label>Gabarito oficial:</label>
-<input type="file" id="gabarito"><br><br>
+    <label>Gabarito oficial:</label>
+    <input type="file" id="gabarito"><br><br>
 
-<label>Resposta do aluno:</label>
-<input type="file" id="aluno"><br><br>
+    <label>Resposta do aluno:</label>
+    <input type="file" id="aluno"><br><br>
 
-<input type="number" id="numQuestoes" value="5" style="display: none;">
-<input type="number" id="numAlternativas" value="5" style="display: none;">
+    <input type="number" id="numQuestoes" value="5" style="display: none;">
+    <input type="number" id="numAlternativas" value="5" style="display: none;">
 
-<button onclick="enviar()">Corrigir</button>
+    <button onclick="enviar()">Corrigir</button>
 
-<h2>Resultado:</h2>
-<div id="resultado"></div>
+    <h2>Resultado:</h2>
+    <div id="resultado"></div>
+</div>
 
-<h2>PDF da Correção:</h2>
-<div id="pdfContainer" style="height: 250px;"></div>
+<div class="container3">
+    <h2>PDF da Correção:</h2>
+    <div id="pdfContainer" style="width: 100%; max-width: 100%;"></div>
 </div>
 
 <script>
@@ -48,8 +55,14 @@ function enviar() {
     const numQuestoes = document.getElementById('numQuestoes').value;
     const numAlternativas = document.getElementById('numAlternativas').value;
 
-    if (!gabarito || !aluno) { alert("Escolha ambas as imagens"); return; }
-    if (!nome || !rm) { alert("Digite nome e RM"); return; }
+    if (!gabarito || !aluno) {
+        alert("Escolha ambas as imagens");
+        return;
+    }
+    if (!nome || !rm) {
+        alert("Digite nome e RM");
+        return;
+    }
 
     const formData = new FormData();
     formData.append('gabarito', gabarito);
@@ -59,10 +72,16 @@ function enviar() {
     formData.append('num_questoes', numQuestoes);
     formData.append('num_alternativas', numAlternativas);
 
-    fetch('http://127.0.0.1:5000/corrigir', { method: 'POST', body: formData })
+    fetch('http://127.0.0.1:5000/corrigir', {
+        method: 'POST',
+        body: formData
+    })
     .then(res => res.json())
     .then(data => {
-        if(data.error){ alert("Erro: " + data.detalhes); return; }
+        if (data.error) {
+            alert("Erro: " + data.detalhes);
+            return;
+        }
 
         document.getElementById('resultado').innerHTML = `
             <p>Respostas gabarito: ${data.respostas_gabarito.join(', ')}</p>
@@ -71,10 +90,14 @@ function enviar() {
             <p>Erros: ${data.erros.join(' | ')}</p>
         `;
 
-        document.getElementById('pdfContainer').innerHTML = `<iframe src="${data.pdf_url}" width="100%" height="600px"></iframe>`;
+        // ✅ Aqui está o PDF em iframe responsivo:
+        document.getElementById('pdfContainer').innerHTML = `
+            <iframe src="${data.pdf_url}" style="width: 100%; height: 80vh; border: none;"></iframe>
+        `;
     })
     .catch(err => console.error(err));
 }
 </script>
+
 </body>
 </html>
