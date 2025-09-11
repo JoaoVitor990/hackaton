@@ -2,11 +2,19 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <title>Correção de Gabarito</title>
 </head>
 <body>
-<h1>Correção de Gabarito</h1>
 
+<div class="container">
+    <img src="etec_itanhaem.png" alt="">
+    <h1>Correção de Gabarito</h1>
+    <a href="#"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
+</div>
+
+<div class="container2">
 <label>Nome do Aluno:</label>
 <input type="text" id="nome" placeholder="Digite o nome"><br><br>
 
@@ -28,8 +36,8 @@
 <div id="resultado"></div>
 
 <h2>PDF da Correção:</h2>
-<div id="pdfContainer" style="height:600px;"></div>
-
+<div id="pdfContainer" style="height: 300px;"></div>
+</div>
 
 <script>
 function enviar() {
