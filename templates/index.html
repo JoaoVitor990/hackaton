@@ -3,40 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <title>Correção de Gabarito</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+<h1>Correção de Gabarito</h1>
 
-<div class="container">
-<img src="etec_itanhaem.png" alt="" class="img-cps">
-<h1>Upload do gabarito</h1>
-<a href="#"><i class="fa-solid fa-right-to-bracket"></i>Sair</a>
-</div>
+<label>Nome do Aluno:</label>
+<input type="text" id="nome" placeholder="Digite o nome"><br><br>
 
-<div class="container2">
-    <div class="gab-of">
-        <p>Gabarito oficial:</p>
-        <br>
-        <i class="fa-solid fa-file"></i> <input type="file" id="gabarito">
-    </div>
-    <div class="gab-al">
-        <p>Resposta do aluno:</p>
-        <br>
-        <i class="fa-solid fa-file"></i> <input type="file" id="aluno"><br><br>
-    </div>
+<label>RM:</label>
+<input type="number" id="rm" placeholder="Digite o RM"><br><br>
 
-            <!-- INVISIVEIS -->
-            <input type="number" id="numQuestoes" value="5"  style="display: none;" ><br><br>
-            <input type="number" id="numAlternativas" value="5" style="display: none;"><br><br>
-            <!-- FIM -->
+<label>Gabarito oficial:</label>
+<input type="file" id="gabarito"><br><br>
 
-        <button onclick="enviar()" id="button">Corrigir</button>
-    <div id="resultado">
-        <h2>Resultado:</h2>
-    </div>
-</div>
-    
+<label>Resposta do aluno:</label>
+<input type="file" id="aluno"><br><br>
+
+<input type="number" id="numQuestoes" value="5" style="display: none;">
+<input type="number" id="numAlternativas" value="5" style="display: none;">
+
+<button onclick="enviar()">Corrigir</button>
+
+<h2>Resultado:</h2>
+<div id="resultado"></div>
+
+<h2>PDF da Correção:</h2>
+<div id="pdfContainer" style="height:600px;"></div>
+
+
 <script>
 function enviar() {
     const gabarito = document.getElementById('gabarito').files[0];
