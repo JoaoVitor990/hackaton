@@ -214,6 +214,39 @@ def resultados():
 # ------------------------------
 # Rota principal
 # ------------------------------
+@app.route('/registrar_turma', methods=['POST'])
+def registrar_turma():
+    try:
+        turma = request.form.get('turma')
+        nome = request.form.get('nome', 'Aluno X')
+        rm = int(request.form.get('rm', 0))
+
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO resultados (nome, rm, turma, nota, respostas)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (nome, rm, turma, 0, ""))
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        return jsonify({"success": True, "turma": turma})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/resultados_view')
+def resultados_view():
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT nome, rm, nota, respostas FROM resultados")
+        resultados = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('resultados.html', resultados=resultados)
+    except Exception as e:
+        return f"Erro ao acessar resultados: {e}", 500
 @app.route('/inicio')
 def inicio():
     return render_template('inicio.html')
@@ -229,6 +262,14 @@ def local_prova():
 @app.route('/gabarito')
 def gabarito():
     return render_template('gabarito.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.php')
+
+@app.route('/registro')
+def registro():
+    return render_template('registro.php')
 
 # ------------------------------
 # Rodar servidor
